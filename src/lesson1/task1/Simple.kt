@@ -126,3 +126,9 @@ fun accountInThreeYears(initial: Int, percent: Int): Double = TODO()
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
 fun numberRevert(number: Int): Int = TODO()
+
+fun main (args: Array<String>) {
+    readline(hours, minutes, seconds)
+    val summ = hours*60*60 + minutes*60 + seconds;
+    println(summ)
+}
