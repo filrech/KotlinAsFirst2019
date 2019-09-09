@@ -59,7 +59,11 @@ fun main() {
  * Пользователь задает время в часах, минутах и секундах, например, 8:20:35.
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
-fun seconds(hours: Int, minutes: Int, seconds: Int): Int = TODO()
+fun seconds(hours: Int, minutes: Int, seconds: Int): Int {
+    readline(hours, minutes, seconds)
+    val result = hours*60*60 + minutes*60 + seconds;
+    println (result)
+}
 
 /**
  * Тривиальная
@@ -68,8 +72,11 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int = TODO()
  * Определить длину того же отрезка в метрах (в данном случае 18.98).
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
-fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double = TODO()
-
+fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
+    readline (sagenes, arshins, vershoks)
+    val result = (sagenes * 3 * 48 * 4.445 + arshins * 48 * 4.445 + vershoks * 4.445) / 100;
+    println(result)
+}
 /**
  * Тривиальная
  *
