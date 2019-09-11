@@ -2,6 +2,7 @@
 
 package lesson1.task1
 
+import java.lang.Math.pow
 import kotlin.math.*
 
 /**
@@ -60,7 +61,7 @@ fun main() {
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
 fun seconds(hours: Int, minutes: Int, seconds: Int): Int {
-    val seconds = 60*60*hours + 60*minutes + seconds
+    val seconds = 60 * (60 * (hours) + minutes) + seconds
     return seconds
 }
 
@@ -72,7 +73,7 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int {
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
 fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
-    val lengthInMeters = (4.445*48*sagenes + 4.445*16*arshins + 4.455*vershoks)/100
+    val lengthInMeters = 4.445 * (16 * (3 * sagenes + arshins) + vershoks) / 100
     return lengthInMeters
 }
 
@@ -83,7 +84,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
 fun angleInRadian(deg: Int, min: Int, sec: Int): Double {
-    val angleInRadian = (deg + min/60 + sec/3600)*PI/180
+    val angleInRadian = (deg + (min + (sec / 60.0)) / 60.0) * (PI / 180.0)
     return angleInRadian;
 }
 
@@ -94,7 +95,7 @@ fun angleInRadian(deg: Int, min: Int, sec: Int): Double {
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
 fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
-    val trackLength = sqrt(sqr(x2-x1) + sqr(y2-y1))
+    val trackLength = sqrt(sqr(x2 - x1) + sqr(y2 - y1))
     return trackLength
 }
 
@@ -105,7 +106,7 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
 fun thirdDigit(number: Int): Int {
-    val thirdDigit = number/100 %10
+    val thirdDigit = number / 100 % 10
     return thirdDigit
 }
 
@@ -117,7 +118,7 @@ fun thirdDigit(number: Int): Int {
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
 fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int {
-    val travelMinutes = (hoursArrive*60 + minutesArrive) - (hoursDepart*60 + minutesDepart)
+    val travelMinutes = (60 * hoursArrive + minutesArrive) - (60 * hoursDepart + minutesDepart)
     return travelMinutes
 }
 
@@ -130,7 +131,7 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  */
 
 fun accountInThreeYears(initial: Int, percent: Int): Double {
-    val result = initial * ((100+percent)/100 * (100+percent)/100 * (100+percent)/100)
+    val result = initial * pow(((100 + percent) / 100.0), 3.0)
     return result
 }
 
@@ -141,9 +142,9 @@ fun accountInThreeYears(initial: Int, percent: Int): Double {
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
 fun numberRevert(number: Int): Int {
-    val l1 = number/100 %10
-    val l2 = number/10 %10
-    val l3 = number %10
-    val numberRevert = l3*100 + l2*10 + l1
+    val l1 = thirdDigit(number)
+    val l2 = number / 10 % 10
+    val l3 = number % 10
+    val numberRevert = 10 * ((10 * l3) + l2) + l1
     return numberRevert
 }
