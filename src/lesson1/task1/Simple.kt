@@ -83,7 +83,6 @@ fun angleInRadian(deg: Int, min: Int, sec: Int): Double =
     (deg + (min + sec / 60.0) / 60) * PI / 180
 
 
-
 /**
  * Тривиальная
  *
