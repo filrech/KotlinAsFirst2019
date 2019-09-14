@@ -133,12 +133,29 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val hypotenuse = max(a, b, c)
-    if (hypotenuse == a) {
-
-fun max(a: Double, b: Double, c: Double): Any {
-
+    return when (max(max(a, b), c)) {
+        c -> when {
+            a + b < c -> -1
+            a * a + b * b > c * c -> 0
+            a * a + b * b == c * c -> 1
+            else -> 2
+        }
+        b -> when {
+            a + c < b -> -1
+            a * a + c * c > b * b -> 0
+            a * a + c * c == b * b -> 1
+            else -> 2
+        }
+        a -> when {
+            c + b < a -> -1
+            c * c + b * b > a * a -> 0
+            c * c + b * b == a * a -> 1
+            else -> 2
+        }
+        else -> -1
+    }
 }
+
 
 /**
  * Средняя
@@ -149,3 +166,4 @@ fun max(a: Double, b: Double, c: Double): Any {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+
