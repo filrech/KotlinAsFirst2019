@@ -106,7 +106,12 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    return if ((kingX == rookX1 || kingY == rookY1) && (kingX != rookX2 && kingY != rookY2)) 1
+    else if ((kingX != rookX1 && kingY != rookY1) && (kingX == rookX2 || kingY == rookY2)) 2
+    else if ((kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2)) 3
+    else 0
+}
 
 /**
  * Простая
@@ -122,7 +127,16 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = TODO()
+): Int {
+    val sumKing = kingX + kingY
+    val sumBishop = bishopX + bishopY
+    val diffKing = kingX - kingY
+    val diffBishop = bishopX - bishopY
+    return if ((kingX == rookX || kingY == rookY) && (sumKing != sumBishop && diffKing != diffBishop)) 1
+    else if ((kingX != rookX && kingY != rookY) && (sumKing == sumBishop || diffKing == diffBishop)) 2
+    else if ((kingX == rookX || kingY == rookY) && (sumKing == sumBishop || diffKing == diffBishop)) 3
+    else 0
+}
 
 /**
  * Простая
@@ -155,7 +169,6 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         else -> -1
     }
 }
-
 
 /**
  * Средняя
