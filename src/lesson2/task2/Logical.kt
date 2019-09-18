@@ -37,7 +37,23 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int = TODO()
+fun daysInMonth(month: Int, year: Int): Int {
+    return when (month) {
+        1 -> 31
+        2 -> if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) return 29 else 28
+        3 -> 31
+        4 -> 30
+        5 -> 31
+        6 -> 30
+        7 -> 31
+        8 -> 31
+        9 -> 30
+        10 -> 31
+        11 -> 30
+        12 -> 31
+        else -> 0
+    }
+}
 
 /**
  * Средняя
@@ -49,7 +65,8 @@ fun daysInMonth(month: Int, year: Int): Int = TODO()
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean = TODO()
+): Boolean =
+    (kotlin.math.sqrt(sqr(x2 - x1) + sqr(y2 - y1)) + r1 <= r2)
 
 /**
  * Средняя
