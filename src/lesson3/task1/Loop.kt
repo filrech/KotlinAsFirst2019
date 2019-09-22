@@ -2,6 +2,9 @@
 
 package lesson3.task1
 
+import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -205,7 +208,19 @@ fun collatzSteps(x: Int): Int {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    var sin = x
+    var alt = -1
+    var i = 1
+    var a = x
+    while (a >= eps) {
+        i += 2
+        a = x.pow(i) / factorial(i)
+        sin += a * alt
+        alt *= -1
+    }
+    return sin
+}
 
 /**
  * Средняя
@@ -264,7 +279,20 @@ fun isPalindrome(n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var a = n
+    var lastDigit: Int
+    while (a > 0) {
+        lastDigit = a % 10
+        if (lastDigit != a / 10 % 10) {
+            return true
+        } else {
+            a /= 10
+            if (a < 10) break
+        }
+    }
+    return false
+}
 
 /**
  * Сложная
@@ -275,7 +303,31 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var a = 0
+    var seq: Int
+    var count = 1
+    var k = 10
+    var s = 0
+    var i = 0
+    do {
+        i++
+        seq = i * i
+        while ((seq / k) != 0) {
+            k *= 10
+            count++
+        }
+        s += count
+    } while (s < n)
+    s -= count
+    k /= 10
+    while (s != n) {
+        a = seq / k % 10
+        k /= 10
+        s++
+    }
+    return a
+}
 
 /**
  * Сложная
@@ -286,4 +338,28 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var a = 0
+    var seq: Int
+    var count = 1
+    var k = 10
+    var s = 0
+    var i = 0
+    do {
+        i++
+        seq = fib(i)
+        while ((seq / k) != 0) {
+            k *= 10
+            count++
+        }
+        s += count
+    } while (s < n)
+    s -= count
+    k /= 10
+    while (s != n) {
+        a = seq / k % 10
+        k /= 10
+        s++
+    }
+    return a
+}
