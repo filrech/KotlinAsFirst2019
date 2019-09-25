@@ -71,12 +71,12 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var count = 0
-    var number = n
-    do {
+    var count = 1
+    var number = n / 10
+    while (number > 0) {
         number /= 10
         count++
-    } while (number > 0)
+    }
     return count
 }
 
@@ -87,8 +87,17 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    return if (n in 1..2) 1
-    else (fib(n - 1) + fib(n - 2))
+    var fib1 = 1
+    var fib2 = 1
+    var fib = 1
+    var count = 0
+    while (count < n - 2) {
+        fib = fib1 + fib2
+        count++
+        fib1 = fib2
+        fib2 = fib
+    }
+    return fib
 }
 
 /**
@@ -129,11 +138,11 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var div = n
+    var div = 0
     do {
-        div--
+        div += minDivisor(n)
     } while (n % div != 0)
-    return div
+    return n / div
 }
 
 /**
@@ -163,7 +172,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    for (k in 1..sqrt(Int.MAX_VALUE.toDouble()).toInt()) {
+    for (k in (sqrt(m.toDouble()).toInt())..(sqrt(n.toDouble()).toInt())) {
         if (k * k in m..n) return true
     }
     return false
@@ -209,13 +218,13 @@ fun collatzSteps(x: Int): Int {
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
 fun sin(x: Double, eps: Double): Double {
-    var sin = x
-    var alt = -1
+    var sin = 0.0
+    var alt = 1
     var i = 1
-    var a = x
+    var a = x % (2 * PI)
     while (a >= eps) {
-        i += 2
         a = x.pow(i) / factorial(i)
+        i += 2
         sin += a * alt
         alt *= -1
     }
@@ -231,7 +240,19 @@ fun sin(x: Double, eps: Double): Double {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    var cos = 1.0
+    var alt = -1
+    var i = 2
+    var a = x % (2 * PI)
+    while (a >= eps) {
+        a = x.pow(i) / factorial(i)
+        i += 2
+        cos += a * alt
+        alt *= -1
+    }
+    return cos
+}
 
 /**
  * Средняя
@@ -305,12 +326,12 @@ fun hasDifferentDigits(n: Int): Boolean {
  */
 fun squareSequenceDigit(n: Int): Int {
     var a = 0
-    var seq: Int
+    var seq = 0
     var count = 1
     var k = 10
     var s = 0
     var i = 0
-    do {
+    while (s < n) {
         i++
         seq = i * i
         while ((seq / k) != 0) {
@@ -318,7 +339,7 @@ fun squareSequenceDigit(n: Int): Int {
             count++
         }
         s += count
-    } while (s < n)
+    }
     s -= count
     k /= 10
     while (s != n) {
@@ -340,12 +361,12 @@ fun squareSequenceDigit(n: Int): Int {
  */
 fun fibSequenceDigit(n: Int): Int {
     var a = 0
-    var seq: Int
+    var seq = 0
     var count = 1
     var k = 10
     var s = 0
     var i = 0
-    do {
+    while (s < n) {
         i++
         seq = fib(i)
         while ((seq / k) != 0) {
@@ -353,7 +374,7 @@ fun fibSequenceDigit(n: Int): Int {
             count++
         }
         s += count
-    } while (s < n)
+    }
     s -= count
     k /= 10
     while (s != n) {
