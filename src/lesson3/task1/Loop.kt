@@ -2,10 +2,7 @@
 
 package lesson3.task1
 
-import kotlin.math.PI
-import kotlin.math.abs
-import kotlin.math.pow
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * Пример
@@ -73,7 +70,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 1
     var number = n / 10
-    while (number > 0) {
+    while (abs(number) > 0) {
         number /= 10
         count++
     }
@@ -156,12 +153,12 @@ fun isCoPrime(m: Int, n: Int): Boolean {
     var count = 0
     var divM = 1
     var divN = 1
-    do {
+    while (divN != n) {
         if ((m % divM == 0) && (n % divN == 0)) count++
         divM++
         divN++
-    } while (divN != n)
-    return count == 1
+    }
+    return (2 > count)
 }
 
 /**
@@ -303,7 +300,7 @@ fun isPalindrome(n: Int): Boolean {
 fun hasDifferentDigits(n: Int): Boolean {
     var a = n
     var lastDigit: Int
-    while (a > 0) {
+    while (a > 9) {
         lastDigit = a % 10
         if (lastDigit != a / 10 % 10) {
             return true
