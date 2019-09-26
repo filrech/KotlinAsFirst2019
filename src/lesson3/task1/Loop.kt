@@ -310,15 +310,15 @@ fun hasDifferentDigits(n: Int): Boolean {
  */
 fun squareSequenceDigit(n: Int): Int {
     var a = 0
-    var seq = 0
+    var seq: Long = 0
     var count = 1
-    var k = 10
+    var k: Long = 10
     var s = 0
     var i = 0
     while (s < n) {
         i++
-        seq = i * i
-        while ((seq / k) != 0) {
+        seq = (i * i).toLong()
+        while ((seq / k) > 0) {
             k *= 10
             count++
         }
@@ -327,7 +327,7 @@ fun squareSequenceDigit(n: Int): Int {
     s -= count
     k /= 10
     while (s != n) {
-        a = seq / k % 10
+        a = (seq / k % 10).toInt()
         k /= 10
         s++
     }
@@ -345,15 +345,15 @@ fun squareSequenceDigit(n: Int): Int {
  */
 fun fibSequenceDigit(n: Int): Int {
     var a = 0
-    var seq = 0
+    var seq: Long = 0
     var count = 1
-    var k = 10
+    var k: Long = 10
     var s = 0
     var i = 0
     while (s < n) {
         i++
-        seq = fib(i)
-        while ((seq / k) != 0) {
+        seq = fib(i).toLong()
+        while ((seq / k) > 0) {
             k *= 10
             count++
         }
@@ -362,7 +362,7 @@ fun fibSequenceDigit(n: Int): Int {
     s -= count
     k /= 10
     while (s != n) {
-        a = seq / k % 10
+        a = (seq / k % 10).toInt()
         k /= 10
         s++
     }
