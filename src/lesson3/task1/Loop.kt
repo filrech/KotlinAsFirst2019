@@ -69,8 +69,8 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var count = 1
-    var number = n / 10
-    while (abs(number) > 0) {
+    var number = abs(n) / 10
+    while (number > 0) {
         number /= 10
         count++
     }
@@ -105,15 +105,13 @@ fun fib(n: Int): Int {
  */
 fun lcm(m: Int, n: Int): Int {
     val product = m * n
-    val lcm: Int
     var a = m
     var b = n
     while (a != b) {
         if (a > b)
             a -= b else b -= a
     }
-    lcm = product / a
-    return lcm
+    return product / a
 }
 
 /**
@@ -212,9 +210,9 @@ fun sin(x: Double, eps: Double): Double {
     var sin = 0.0
     var alt = 1
     var i = 1
-    var a = x % (2 * PI)
-    while (a >= eps) {
-        a = x.pow(i) / factorial(i)
+    var a = x
+    while (abs(a) >= eps) {
+        a = (x % (2 * PI)).pow(i) / factorial(i)
         i += 2
         sin += a * alt
         alt *= -1
@@ -235,9 +233,9 @@ fun cos(x: Double, eps: Double): Double {
     var cos = 1.0
     var alt = -1
     var i = 2
-    var a = x % (2 * PI)
-    while (a >= eps) {
-        a = x.pow(i) / factorial(i)
+    var a = x
+    while (abs(a) >= eps) {
+        a = (x % (2 * PI)).pow(i) / factorial(i)
         i += 2
         cos += a * alt
         alt *= -1
@@ -317,7 +315,9 @@ fun squareSequenceDigit(n: Int): Int {
     var i = 0
     while (s < n) {
         i++
+        //Использую Long тк происходит переполнение Int при вводе больших значений ("n" -> 417160) и значение переменной всегда целое число
         seq = (i * i).toLong()
+        //Не использовал функцию digitNumber тк требуется изменять тип функции + переменная k используется в дальнейшем
         while ((seq / k) > 0) {
             k *= 10
             count++
