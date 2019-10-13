@@ -235,7 +235,8 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     val result = mutableListOf<Int>()
     var num = n
-    while (num != 0) {
+    if (n == 0) result.add(0)
+    while (num > 0) {
         result += num % base
         num /= base
     }
