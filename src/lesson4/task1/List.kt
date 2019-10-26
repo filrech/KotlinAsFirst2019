@@ -367,8 +367,7 @@ fun russian(n: Int): String {
             result += l3[thd / 100]
             result += l2thd[thd / 10 % 10]
             if (thd % 10 == 0) result += "тысяч "
-            if ((thd % 10 == 1) && (number < 10000)) result += "тысяча "
-            if ((thd % 10 == 1) && (number > 10000)) result += l4[thd % 10] + "тысяча "
+            if (thd % 10 == 1) result += l4[thd % 10] + "тысяча "
             if (thd % 10 in 2..4) result += l4[thd % 10] + "тысячи "
             if (thd % 10 in 5..9) result += l4[thd % 10] + "тысяч "
         }
