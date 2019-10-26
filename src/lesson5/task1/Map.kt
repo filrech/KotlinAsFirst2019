@@ -130,7 +130,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
  *   subtractOf(a = mutableMapOf("a" to "z"), mapOf("a" to "z"))
  *     -> a changes to mutableMapOf() aka becomes empty
  */
-fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit {
+fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
     for ((key, value) in b) {
         if (a[key] == value) a.remove(key, value)
     }
@@ -188,6 +188,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
+//Не учитывается случай с  > 2мя названиями
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
     val result = mutableMapOf<String, Double>()
     val stockPricesList = stockPrices.toMutableList()
@@ -258,7 +259,19 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> {
+    val result = mutableMapOf<String, Int>()
+    val setToRemove = mutableSetOf<String>()
+    for (i in list) {
+        if (result[i] == null) result[i] = 1
+        else result[i] = result[i]?.plus(1)!!
+    }
+    for ((char, _) in result) {
+        if (result[char] == 1) setToRemove.add(char)
+    }
+    for (i in setToRemove) result.remove(i)
+    return result
+}
 
 /**
  * Средняя
@@ -269,7 +282,17 @@ fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean = TODO()
+fun hasAnagrams(words: List<String>): Boolean {
+    var count = 0
+    for (word in words) {
+        val listOfChar = word.toCharArray().toSet().toMutableList()
+        for (anotherWord in words) {
+            if (canBuildFrom(listOfChar, anotherWord)) count++
+        }
+        listOfChar.clear()
+    }
+    return count > words.size
+}
 
 /**
  * Сложная
