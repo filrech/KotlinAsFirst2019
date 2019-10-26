@@ -289,7 +289,6 @@ fun hasAnagrams(words: List<String>): Boolean {
         for (anotherWord in words) {
             if (canBuildFrom(listOfChar, anotherWord)) count++
         }
-        listOfChar.clear()
     }
     return count > words.size
 }
