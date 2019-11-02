@@ -96,7 +96,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     for ((name, grade) in grades) {
         result.getOrPut(grade, { mutableListOf() }).add(name)
     }
-    return result.toSortedMap()
+    return result
 }
 
 /**
@@ -132,7 +132,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
     for ((key, value) in b) {
-        if (a[key] == value) a.remove(key, value)
+        a.remove(key, value)
     }
 }
 
@@ -145,8 +145,8 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
     val result = mutableListOf<String>()
-    for (i in a.indices) {
-        if (a[i] == b[i]) result += a[i]
+    for (i in a) {
+        if (b.contains(i)) result += i
     }
     return result
 }
@@ -173,7 +173,9 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
     for ((name, number) in mapB) {
         if (result.containsKey(name)) {
             if (result[name] != mapB[name]) result[name] = "${mapA[name]}, ${mapB[name]}"
-        } else result[name] = number
+        } else {
+            result[name] = number
+        }
     }
     return result.toSortedMap()
 }
@@ -189,17 +191,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
 //Не учитывается случай с  > 2мя названиями
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
-    val result = mutableMapOf<String, Double>()
-    val stockPricesList = stockPrices.toMutableList()
-    for ((promotion, price) in stockPricesList) {
-        if (result[promotion] == null) result[promotion] = price
-        else {
-            result[promotion] = result[promotion]?.plus(price)?.div(2)!!
-        }
-    }
-    return result
-}
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = TODO()
 
 /**
  * Средняя
@@ -217,7 +209,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *   ) -> "Мария"
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    var result = ""
+    var result: String? = null
     var min = Double.POSITIVE_INFINITY
     for ((name, pair) in stuff) {
         if (pair.first == kind) {
@@ -225,7 +217,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
                 result = name
                 min = pair.second
             }
-        } else return null
+        }
     }
     return result
 }
@@ -240,7 +232,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    val result = word.toList()
+    val result = word.toLowerCase()
     for (i in result) {
         if (chars.contains(i)) continue else return false
     }
@@ -261,16 +253,11 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
  */
 fun extractRepeats(list: List<String>): Map<String, Int> {
     val result = mutableMapOf<String, Int>()
-    val setToRemove = mutableSetOf<String>()
     for (i in list) {
         if (result[i] == null) result[i] = 1
-        else result[i] = result[i]?.plus(1)!!
+        else result[i] = result[i]!! + 1
     }
-    for ((char, _) in result) {
-        if (result[char] == 1) setToRemove.add(char)
-    }
-    for (i in setToRemove) result.remove(i)
-    return result
+    return result.filter { it.value != 1 }
 }
 
 /**
@@ -283,14 +270,12 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
 fun hasAnagrams(words: List<String>): Boolean {
-    var count = 0
+    val setOfChar = mutableSetOf<List<Char>>()
     for (word in words) {
-        val listOfChar = word.toCharArray().toSet().toMutableList()
-        for (anotherWord in words) {
-            if (canBuildFrom(listOfChar, anotherWord)) count++
-        }
+        if (word.toList().sorted() in setOfChar) return true
+        setOfChar += word.toList().sorted()
     }
-    return count > words.size
+    return false
 }
 
 /**

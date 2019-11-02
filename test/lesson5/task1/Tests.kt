@@ -3,6 +3,7 @@ package lesson5.task1
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import ru.spbstu.kotlin.typeclass.kind
 
 class Tests {
     @Test
@@ -209,12 +210,10 @@ class Tests {
             mapOf("MSFT" to 150.0, "NFLX" to 45.0),
             averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0, "NFLX" to 50.0))
         )
-        /*
         assertEquals(
             mapOf("MSFT" to 200.0, "NFLX" to 50.0),
             averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "MSFT" to 300.0, "NFLX" to 50.0))
         )
-        */
     }
 
     @Test
@@ -231,6 +230,12 @@ class Tests {
             findCheapestStuff(
                 mapOf("Мария" to ("печенье" to 20.0), "Орео" to ("печенье" to 100.0)),
                 "печенье"
+            )
+        )
+        assertEquals(
+            "a",
+            findCheapestStuff(
+                mapOf("" to ("a" to 0.0), "a" to ("" to 0.0)), ""
             )
         )
     }

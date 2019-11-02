@@ -2,9 +2,12 @@
 
 package lesson4.task1
 
+import javafx.scene.control.Separator
 import lesson1.task1.discriminant
 import lesson3.task1.isPrime
 import lesson3.task1.minDivisor
+import java.lang.StringBuilder
+import java.util.function.UnaryOperator
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -120,8 +123,8 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double {
     var abs = 0.0
-    for (i in v.indices) {
-        abs += v[i] * v[i]
+    for (i in v) {
+        abs += i * i
     }
     return sqrt(abs)
 }
@@ -174,8 +177,10 @@ fun times(a: List<Int>, b: List<Int>): Int {
  */
 fun polynom(p: List<Int>, x: Int): Int {
     var px = 0
-    for (i in p.indices) {
-        px += p[i] * x.toDouble().pow(i).toInt()
+    var ext = 1
+    for (i in p) {
+        px += i * ext
+        ext *= x
     }
     return px
 }
@@ -207,13 +212,18 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
 fun factorize(n: Int): List<Int> {
     val result = mutableListOf<Int>()
     var num = n
-    while (!isPrime(num)) {
-        val div = minDivisor(num)
-        result.add(div)
-        num /= div
+    var div = minDivisor(num)
+    result.add(div)
+    num /= div
+    while (div <= num) {
+        if (num % div == 0) {
+            num /= div
+            result.add(div)
+        } else {
+            div++
+        }
     }
-    result.add(num)
-    return result.toList().sorted()
+    return result
 }
 
 /**
@@ -235,11 +245,10 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     val result = mutableListOf<Int>()
     var num = n
-    if (n == 0) result.add(0)
-    while (num > 0) {
+    do {
         result += num % base
         num /= base
-    }
+    } while (num > 0)
     return result.reversed()
 }
 
@@ -255,13 +264,16 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    val result = mutableListOf<Char>()
+    val result = StringBuilder()
     val number = convert(n, base)
     for (i in number) {
-        if (i < 10) result.add((i + '0'.toInt()).toChar())
-        else result.add(((i - 10) + 'a'.toInt()).toChar())
+        if (i < 10) {
+            result.append(i)
+        } else {
+            result.append('a' + i - 10)
+        }
     }
-    return result.joinToString(separator = "")
+    return result.toString()
 }
 
 /**
@@ -274,8 +286,10 @@ fun convertToString(n: Int, base: Int): String {
 fun decimal(digits: List<Int>, base: Int): Int {
     val reversed = digits.reversed()
     var result = 0
-    for (i in digits.indices) {
-        result += reversed[i] * base.toDouble().pow(i).toInt()
+    var ext = 1
+    for (i in reversed) {
+        result += i * ext
+        ext *= base
     }
     return result
 }
@@ -293,12 +307,8 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * (например, str.toInt(base)), запрещается.
  */
 fun decimalFromString(str: String, base: Int): Int {
-    var result = 0
     val strList = str.map(Character::getNumericValue)
-    for (i in strList.indices) {
-        result += strList[i] * base.toDouble().pow(strList.size - i - 1).toInt()
-    }
-    return result
+    return decimal(strList, base)
 }
 
 /**
@@ -319,7 +329,9 @@ fun roman(n: Int): String {
         if (number >= arab[i]) {
             number -= arab[i]
             result += roman[i]
-        } else i--
+        } else {
+            i--
+        }
     }
     return result
 }
@@ -377,8 +389,7 @@ fun russian(n: Int): String {
         if (number % 100 < 20) {
             result += l3[number / 100]
             result += l1[number % 100]
-        }
-        if (number % 100 >= 20) {
+        } else {
             result += l3[number / 100]
             result += l2[number / 10 % 10]
             result += l1[number % 10]
