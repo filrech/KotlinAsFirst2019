@@ -144,11 +144,11 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
-    val result = mutableListOf<String>()
+    val result = mutableSetOf<String>()
     for (i in a) {
         if (b.contains(i)) result += i
     }
-    return result
+    return result.toList()
 }
 
 /**
@@ -190,8 +190,23 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-//Не учитывается случай с  > 2мя названиями
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = TODO()
+//Не учитывается случай с  > 2мя названиями // (:
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
+    val result = mutableMapOf<String, Double>()
+    val promotionList = mutableListOf<String>()
+    for ((promotion, price) in stockPrices) {
+        if (result[promotion] == null) result[promotion] = price
+        else {
+            result[promotion] = result[promotion]!! + price
+        }
+        promotionList += promotion
+    }
+    val repeatsCount = extractRepeats(promotionList)
+    for ((promotion, _) in result) {
+        result[promotion] = result[promotion]!! / repeatsCount.getOrDefault(promotion, 1)
+    }
+    return result
+}
 
 /**
  * Средняя
@@ -234,7 +249,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
     val result = word.toLowerCase()
     for (i in result) {
-        if (chars.contains(i)) continue else return false
+        if (chars.contains(i.toLowerCase())) continue else return false
     }
     return true
 }
