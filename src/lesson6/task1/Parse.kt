@@ -60,7 +60,6 @@ fun main() {
     }
 }
 
-
 /**
  * Средняя
  *
@@ -204,14 +203,15 @@ fun firstDuplicateIndex(str: String): Int {
  */
 fun mostExpensive(description: String): String {
     var result = ""
-    val parts = description.split(Regex(";? "))
+    val parts = description.split(Regex(";? ")).toMutableList()
     var tmp = 0.0
-    for (part in parts) {
+    for ((index, part) in parts.withIndex()) {
         val comparablePart = part.toDoubleOrNull()
         if (comparablePart != null) {
             if (comparablePart > tmp) {
                 tmp = comparablePart
             }
+            parts[index] = comparablePart.toString()
         }
     }
     result += try {
