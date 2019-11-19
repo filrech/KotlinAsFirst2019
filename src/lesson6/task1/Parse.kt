@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import java.lang.IndexOutOfBoundsException
 
 /**
  * Пример
@@ -213,10 +214,10 @@ fun mostExpensive(description: String): String {
             }
         }
     }
-    result += if ((tmp == 0.0) || (parts.size == 2)) {
-        parts[0]
-    } else {
+    result += try {
         parts[parts.indexOf(tmp.toString()) - 1]
+    } catch (e: IndexOutOfBoundsException) {
+        parts[0]
     }
     return result
 }
