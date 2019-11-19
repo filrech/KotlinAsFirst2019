@@ -213,7 +213,7 @@ fun mostExpensive(description: String): String {
             }
         }
     }
-    result += if (tmp == 0.0) {
+    result += if ((tmp == 0.0) || (parts.size == 2)) {
         parts[0]
     } else {
         parts[parts.indexOf(tmp.toString()) - 1]
