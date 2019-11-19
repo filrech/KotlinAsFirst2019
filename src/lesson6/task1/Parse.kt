@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 /**
  * Пример
  *
@@ -69,7 +71,24 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+val month = listOf(
+    "января", "февраля", "марта", "апреля", "мая", "июня",
+    "июля", "августа", "сентября", "октября", "ноября", "декабря"
+)
+
+fun dateStrToDigit(str: String): String {
+    var result = ""
+    val parts = str.split(" ")
+    if ((parts.size == 3) && (parts[0].toIntOrNull() != null) && (parts[2].toIntOrNull() != null)) {
+        val day = parts[0].toInt()
+        val month = month.indexOf(parts[1]) + 1
+        val year = parts[2].toInt()
+        if ((month in 1..12) && (day in 1..daysInMonth(month, year))) {
+            result = String.format("%02d.%02d.%d", day, month, year)
+        }
+    }
+    return result
+}
 
 /**
  * Средняя
@@ -81,7 +100,22 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    var result = ""
+    val parts = digital.split(".")
+    if (
+        (parts.size == 3) && (parts[1].toIntOrNull() in 1..12) &&
+        (parts[0].toIntOrNull() != null) && (parts[2].toIntOrNull() != null)
+    ) {
+        val day = parts[0].toInt()
+        val month = month[parts[1].toInt() - 1]
+        val year = parts[2].toInt()
+        if (day in 1..daysInMonth(parts[1].toInt(), year)) {
+            result = String.format("%d %s %d", day, month, year)
+        }
+    }
+    return result
+}
 
 /**
  * Средняя
@@ -144,7 +178,17 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val parts = str.split(" ")
+    var index = 0
+    if (parts.size > 1) {
+        for (i in parts.indices) {
+            if (parts[i].toLowerCase() == parts[i + 1].toLowerCase()) return index
+            index += parts[i].length + 1
+        }
+    }
+    return -1
+}
 
 /**
  * Сложная
@@ -157,7 +201,23 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше либо равны нуля.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    var result = ""
+    val parts = description.split(Regex(";? "))
+    var tmp = 0.0
+    for (part in parts) {
+        val comparablePart = part.toDoubleOrNull()
+        if (comparablePart != null) {
+            if (comparablePart > tmp) {
+                tmp = comparablePart
+            }
+        }
+    }
+    if (tmp != 0.0) {
+        result += parts[parts.indexOf(tmp.toString()) - 1]
+    }
+    return result
+}
 
 /**
  * Сложная

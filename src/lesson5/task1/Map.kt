@@ -195,8 +195,9 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
     val result = mutableMapOf<String, Double>()
     val promotionList = mutableListOf<String>()
     for ((promotion, price) in stockPrices) {
-        if (result[promotion] == null) result[promotion] = price
-        else {
+        if (result[promotion] == null) {
+            result[promotion] = price
+        } else {
             result[promotion] = result[promotion]!! + price
         }
         promotionList += promotion
@@ -269,8 +270,8 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
 fun extractRepeats(list: List<String>): Map<String, Int> {
     val result = mutableMapOf<String, Int>()
     for (i in list) {
-        if (result[i] == null) result[i] = 1
-        else result[i] = result[i]!! + 1
+        if (result[i] == null) result[i] = 0
+        result[i] = result[i]!! + 1
     }
     return result.filter { it.value != 1 }
 }
