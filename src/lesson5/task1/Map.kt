@@ -270,6 +270,7 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
 fun extractRepeats(list: List<String>): Map<String, Int> {
     val result = mutableMapOf<String, Int>()
     for (i in list) {
+        //Вроде вынес уже
         if (result[i] == null) result[i] = 0
         result[i] = result[i]!! + 1
     }

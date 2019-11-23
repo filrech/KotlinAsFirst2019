@@ -79,12 +79,14 @@ val month = listOf(
 fun dateStrToDigit(str: String): String {
     var result = ""
     val parts = str.split(" ")
-    if ((parts.size == 3) && (parts[0].toIntOrNull() != null) && (parts[2].toIntOrNull() != null)) {
-        val day = parts[0].toInt()
+    if (parts.size == 3) {
+        val day = parts[0].toIntOrNull()
         val month = month.indexOf(parts[1]) + 1
-        val year = parts[2].toInt()
-        if ((month in 1..12) && (day in 1..daysInMonth(month, year))) {
-            result = String.format("%02d.%02d.%d", day, month, year)
+        val year = parts[2].toIntOrNull()
+        if (day != null && year != null) {
+            if ((month in 1..12) && (day in 1..daysInMonth(month, year))) {
+                result = String.format("%02d.%02d.%d", day, month, year)
+            }
         }
     }
     return result
@@ -103,15 +105,14 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     var result = ""
     val parts = digital.split(".")
-    if (
-        (parts.size == 3) && (parts[1].toIntOrNull() in 1..12) &&
-        (parts[0].toIntOrNull() != null) && (parts[2].toIntOrNull() != null)
-    ) {
-        val day = parts[0].toInt()
+    if ((parts.size == 3) && (parts[1].toIntOrNull() in 1..12)) {
+        val day = parts[0].toIntOrNull()
         val month = month[parts[1].toInt() - 1]
-        val year = parts[2].toInt()
-        if (day in 1..daysInMonth(parts[1].toInt(), year)) {
-            result = String.format("%d %s %d", day, month, year)
+        val year = parts[2].toIntOrNull()
+        if (day != null && year != null) {
+            if (day in 1..daysInMonth(parts[1].toInt(), year)) {
+                result = String.format("%d %s %d", day, month, year)
+            }
         }
     }
     return result
@@ -183,7 +184,7 @@ fun firstDuplicateIndex(str: String): Int {
     var index = 0
     if (parts.size > 1) {
         for (i in 0..parts.size - 2) {
-            if (parts[i].toLowerCase() == parts[i + 1].toLowerCase()) return index
+            if (parts[i].equals(parts[i + 1], ignoreCase = true)) return index
             index += parts[i].length + 1
         }
     }
@@ -205,19 +206,17 @@ fun mostExpensive(description: String): String {
     var result = ""
     val parts = description.split(Regex(";? ")).toMutableList()
     var tmp = 0.0
-    for ((index, part) in parts.withIndex()) {
-        val comparablePart = part.toDoubleOrNull()
-        if (comparablePart != null) {
-            if (comparablePart > tmp) {
-                tmp = comparablePart
+    if (parts.size > 1) {
+        for (i in (1..parts.size step 2)) {
+            val comparablePart = parts[i].toDoubleOrNull()
+            if (comparablePart != null) {
+                if (comparablePart >= tmp) {
+                    tmp = comparablePart
+                    result = parts[i - 1]
+                }
+                parts[i] = comparablePart.toString()
             }
-            parts[index] = comparablePart.toString()
         }
-    }
-    result += try {
-        parts[parts.indexOf(tmp.toString()) - 1]
-    } catch (e: IndexOutOfBoundsException) {
-        parts[0]
     }
     return result
 }

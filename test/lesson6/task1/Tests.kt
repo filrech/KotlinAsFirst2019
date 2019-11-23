@@ -47,6 +47,7 @@ class Tests {
     @Tag("Normal")
     fun dateDigitToStr() {
         assertEquals("15 июля 2016", dateDigitToStr("15.07.2016"))
+        assertEquals("", dateStrToDigit("23"))
         assertEquals("", dateDigitToStr("01.02.20.19"))
         assertEquals("", dateDigitToStr("28.00.2000"))
         assertEquals("3 апреля 2011", dateDigitToStr("03.04.2011"))
@@ -103,6 +104,7 @@ class Tests {
     @Test
     @Tag("Hard")
     fun firstDuplicateIndex() {
+        assertEquals(0, firstDuplicateIndex("B b"))
         assertEquals(0, firstDuplicateIndex("a a"))
         assertEquals(-1, firstDuplicateIndex("a k"))
         assertEquals(-1, firstDuplicateIndex("Привет"))
@@ -118,7 +120,8 @@ class Tests {
         assertEquals("a", mostExpensive("a 10737418.24"))
         assertEquals("", mostExpensive(""))
         assertEquals("d", mostExpensive("a 0; d 10737418.24"))
-
+        assertEquals("3", mostExpensive("3 0"))
+        assertEquals("4", mostExpensive("6 0; 4 3"))
         assertEquals("Курица", mostExpensive("Хлеб 39.9; Молоко 62.5; Курица 184.0; Конфеты 89.9"))
         assertEquals("Вино", mostExpensive("Вино 255.0"))
     }
