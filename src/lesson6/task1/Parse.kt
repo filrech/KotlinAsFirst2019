@@ -3,7 +3,6 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
-import java.lang.IndexOutOfBoundsException
 
 /**
  * Пример
@@ -77,19 +76,15 @@ val month = listOf(
 )
 
 fun dateStrToDigit(str: String): String {
-    var result = ""
     val parts = str.split(" ")
-    if (parts.size == 3) {
+    return if (parts.size == 3) {
         val day = parts[0].toIntOrNull()
         val month = month.indexOf(parts[1]) + 1
         val year = parts[2].toIntOrNull()
-        if (day != null && year != null) {
-            if ((month in 1..12) && (day in 1..daysInMonth(month, year))) {
-                result = String.format("%02d.%02d.%d", day, month, year)
-            }
-        }
-    }
-    return result
+        if ((day != null && year != null) && ((month in 1..12) && (day in 1..daysInMonth(month, year)))) {
+            String.format("%02d.%02d.%d", day, month, year)
+        } else ""
+    } else ""
 }
 
 /**
@@ -103,19 +98,15 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    var result = ""
     val parts = digital.split(".")
-    if ((parts.size == 3) && (parts[1].toIntOrNull() in 1..12)) {
+    return if ((parts.size == 3) && (parts[1].toIntOrNull() in 1..12)) {
         val day = parts[0].toIntOrNull()
         val month = month[parts[1].toInt() - 1]
         val year = parts[2].toIntOrNull()
-        if (day != null && year != null) {
-            if (day in 1..daysInMonth(parts[1].toInt(), year)) {
-                result = String.format("%d %s %d", day, month, year)
-            }
-        }
-    }
-    return result
+        if ((day != null && year != null) && (day in 1..daysInMonth(parts[1].toInt(), year))) {
+            String.format("%d %s %d", day, month, year)
+        } else ""
+    } else ""
 }
 
 /**
@@ -182,11 +173,9 @@ fun plusMinus(expression: String): Int = TODO()
 fun firstDuplicateIndex(str: String): Int {
     val parts = str.split(" ")
     var index = 0
-    if (parts.size > 1) {
-        for (i in 0..parts.size - 2) {
-            if (parts[i].equals(parts[i + 1], ignoreCase = true)) return index
-            index += parts[i].length + 1
-        }
+    for (i in 0..parts.size - 2) {
+        if (parts[i].equals(parts[i + 1], ignoreCase = true)) return index
+        index += parts[i].length + 1
     }
     return -1
 }
@@ -214,7 +203,6 @@ fun mostExpensive(description: String): String {
                     tmp = comparablePart
                     result = parts[i - 1]
                 }
-                parts[i] = comparablePart.toString()
             }
         }
     }
