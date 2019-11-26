@@ -190,7 +190,6 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-//Не учитывается случай с  > 2мя названиями // (:
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
     val result = mutableMapOf<String, Double>()
     val promotionList = mutableListOf<String>()
@@ -340,7 +339,7 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     var index = 0
     var backwardIndex = list.size - 1
-    for (value in list) {
+    for (i in list) {
         val sumValue = list[index] + list[backwardIndex]
         if ((sumValue == number) && (index != backwardIndex)) {
             return Pair(index, backwardIndex)
@@ -377,3 +376,5 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+
+
