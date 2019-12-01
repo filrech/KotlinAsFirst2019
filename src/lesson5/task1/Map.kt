@@ -343,11 +343,21 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
         val sumValue = list[index] + list[backwardIndex]
         if ((sumValue == number) && (index != backwardIndex)) {
             return Pair(index, backwardIndex)
-        }
-        if (sumValue > number) {
+        } else if (sumValue > number) {
             backwardIndex--
+        } else if (sumValue < number) {
+            index++
         }
-        if (sumValue < number) {
+    }
+    index = 0
+    backwardIndex = list.size - 1
+    for (i in list) {
+        val sumValue = list[index] + list[backwardIndex]
+        if ((sumValue == number) && (index != backwardIndex)) {
+            return Pair(index, backwardIndex)
+        } else if (sumValue < number) {
+            backwardIndex--
+        } else if (sumValue > number) {
             index++
         }
     }
