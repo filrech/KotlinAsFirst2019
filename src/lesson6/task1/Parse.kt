@@ -83,8 +83,12 @@ fun dateStrToDigit(str: String): String {
         val year = parts[2].toIntOrNull()
         if ((day != null && year != null) && ((month in 1..12) && (day in 1..daysInMonth(month, year)))) {
             String.format("%02d.%02d.%d", day, month, year)
-        } else ""
-    } else ""
+        } else {
+            ""
+        }
+    } else {
+        ""
+    }
 }
 
 /**
@@ -105,8 +109,12 @@ fun dateDigitToStr(digital: String): String {
         val year = parts[2].toIntOrNull()
         if ((day != null && year != null) && (day in 1..daysInMonth(parts[1].toInt(), year))) {
             String.format("%d %s %d", day, month, year)
-        } else ""
-    } else ""
+        } else {
+            ""
+        }
+    } else {
+        ""
+    }
 }
 
 /**
@@ -203,7 +211,7 @@ fun mostExpensive(description: String): String {
                     tmp = comparablePart
                     result = parts[i - 1]
                 }
-            }
+            } else return ""
         }
     }
     return result

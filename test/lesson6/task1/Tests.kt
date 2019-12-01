@@ -116,6 +116,7 @@ class Tests {
     @Test
     @Tag("Hard")
     fun mostExpensive() {
+        assertEquals("", mostExpensive("b 105415151; a 1414;"))
         assertEquals("a", mostExpensive("a 10737418.24; a 0"))
         assertEquals("a", mostExpensive("a 10737418.24"))
         assertEquals("", mostExpensive(""))
