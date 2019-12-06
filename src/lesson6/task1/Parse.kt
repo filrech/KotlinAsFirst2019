@@ -211,7 +211,9 @@ fun mostExpensive(description: String): String {
                     tmp = comparablePart
                     result = parts[i - 1]
                 }
-            } else return ""
+            } else {
+                return ""
+            }
         }
     }
     return result
