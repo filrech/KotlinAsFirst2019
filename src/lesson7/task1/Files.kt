@@ -85,8 +85,40 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
-
+    val outputStream = File(outputName).bufferedWriter()
+    var prevSymbol = ' '
+    val listOfFirstLetter = listOf('ж', 'ч', 'ш', 'щ')
+    val listOfSecondLetter = listOf('ы', 'я', 'ю')
+    for (line in File(inputName).readLines()) {
+        for (symbol in line) {
+            if ((prevSymbol.toLowerCase() in listOfFirstLetter) && (symbol.toLowerCase() in listOfSecondLetter)) {
+                if ((symbol == 'ы') || (symbol == 'Ы')) {
+                    if (symbol.isLowerCase()) {
+                        outputStream.write("и")
+                    } else {
+                        outputStream.write("И")
+                    }
+                }
+                if ((symbol == 'я') || (symbol == 'Я')) {
+                    if (symbol.isLowerCase()) {
+                        outputStream.write("а")
+                    } else {
+                        outputStream.write("А")
+                    }
+                }
+                if ((symbol == 'ю') || (symbol == 'Ю')) {
+                    if (symbol.isLowerCase()) {
+                        outputStream.write("у")
+                    } else {
+                        outputStream.write("У")
+                    }
+                }
+            } else outputStream.write("$symbol")
+            prevSymbol = symbol
+        }
+        outputStream.write("\n")
+    }
+    outputStream.close()
 }
 
 /**
