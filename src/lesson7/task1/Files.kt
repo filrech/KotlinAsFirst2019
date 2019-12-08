@@ -92,21 +92,21 @@ fun sibilants(inputName: String, outputName: String) {
     for (line in File(inputName).readLines()) {
         for (symbol in line) {
             if ((prevSymbol.toLowerCase() in listOfFirstLetter) && (symbol.toLowerCase() in listOfSecondLetter)) {
-                if ((symbol == 'ы') || (symbol == 'Ы')) {
+                if ((symbol.equals('ы', ignoreCase = true))) {
                     if (symbol.isLowerCase()) {
                         outputStream.write("и")
                     } else {
                         outputStream.write("И")
                     }
                 }
-                if ((symbol == 'я') || (symbol == 'Я')) {
+                if ((symbol.equals('я', ignoreCase = true))) {
                     if (symbol.isLowerCase()) {
                         outputStream.write("а")
                     } else {
                         outputStream.write("А")
                     }
                 }
-                if ((symbol == 'ю') || (symbol == 'Ю')) {
+                if ((symbol.equals('ю', ignoreCase = true))) {
                     if (symbol.isLowerCase()) {
                         outputStream.write("у")
                     } else {
