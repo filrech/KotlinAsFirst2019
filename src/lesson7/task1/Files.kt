@@ -117,6 +117,7 @@ fun sibilants(inputName: String, outputName: String) {
             prevSymbol = symbol
         }
         outputStream.write("\n")
+        prevSymbol = ' '
     }
     outputStream.close()
 }
