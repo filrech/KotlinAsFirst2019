@@ -86,38 +86,19 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  */
 fun sibilants(inputName: String, outputName: String) {
     val outputStream = File(outputName).bufferedWriter()
-    var prevSymbol = ' '
     val listOfFirstLetter = listOf('ж', 'ч', 'ш', 'щ')
-    val listOfSecondLetter = listOf('ы', 'я', 'ю')
+    val symbolMap = mapOf('ы' to 'и', 'я' to 'а', 'ю' to 'у', 'Ы' to 'И', 'Я' to 'А', 'Ю' to 'У')
     for (line in File(inputName).readLines()) {
+        var prevSymbol = ' '
         for (symbol in line) {
-            if ((prevSymbol.toLowerCase() in listOfFirstLetter) && (symbol.toLowerCase() in listOfSecondLetter)) {
-                if ((symbol.equals('ы', ignoreCase = true))) {
-                    if (symbol.isLowerCase()) {
-                        outputStream.write("и")
-                    } else {
-                        outputStream.write("И")
-                    }
-                }
-                if ((symbol.equals('я', ignoreCase = true))) {
-                    if (symbol.isLowerCase()) {
-                        outputStream.write("а")
-                    } else {
-                        outputStream.write("А")
-                    }
-                }
-                if ((symbol.equals('ю', ignoreCase = true))) {
-                    if (symbol.isLowerCase()) {
-                        outputStream.write("у")
-                    } else {
-                        outputStream.write("У")
-                    }
-                }
-            } else outputStream.write("$symbol")
+            if ((prevSymbol.toLowerCase() in listOfFirstLetter) && (symbol in symbolMap)) {
+                outputStream.write("${symbolMap[symbol]}")
+            } else {
+                outputStream.write("$symbol")
+            }
             prevSymbol = symbol
         }
         outputStream.write("\n")
-        prevSymbol = ' '
     }
     outputStream.close()
 }
