@@ -38,11 +38,15 @@ data class Square(val column: Int, val row: Int) {
 fun square(notation: String): Square {
     val charsInNotation = notation as CharSequence
     try {
-        return Square(charsInNotation[0].toInt() - 'a'.toInt() + 1, charsInNotation[1].toInt() - '0'.toInt())
-    } catch (error: IllegalArgumentException) {
-        throw IllegalArgumentException()
-    } catch (error: IndexOutOfBoundsException) {
-        throw IllegalArgumentException()
+        val columnNotation = charsInNotation[0].toInt() - 'a'.toInt() + 1
+        val rowNotation = charsInNotation[1].toInt() - '0'.toInt()
+        if ((columnNotation in 1..8) && (rowNotation in 1..8) && notation.toList().size == 2) {
+            return Square(columnNotation, rowNotation)
+        } else {
+            throw IndexOutOfBoundsException()
+        }
+    } catch (error: StringIndexOutOfBoundsException) {
+        throw IndexOutOfBoundsException()
     }
 }
 
