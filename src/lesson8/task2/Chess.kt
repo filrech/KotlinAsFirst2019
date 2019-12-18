@@ -2,6 +2,8 @@
 
 package lesson8.task2
 
+import java.lang.IndexOutOfBoundsException
+
 /**
  * Клетка шахматной доски. Шахматная доска квадратная и имеет 8 х 8 клеток.
  * Поэтому, обе координаты клетки (горизонталь row, вертикаль column) могут находиться в пределах от 1 до 8.
@@ -39,6 +41,8 @@ fun square(notation: String): Square {
         return Square(charsInNotation[0].toInt() - 'a'.toInt() + 1, charsInNotation[1].toInt() - '0'.toInt())
     } catch (error: IllegalArgumentException) {
         throw IllegalArgumentException()
+    } catch (error: IndexOutOfBoundsException) {
+        throw IllegalArgumentException()
     }
 }
 
@@ -68,7 +72,7 @@ fun square(notation: String): Square {
 fun rookMoveNumber(start: Square, end: Square): Int {
     if (!start.inside() || !end.inside()) throw IllegalArgumentException()
     var moveNumber = 0
-    if ((start.column == end.column) && (start.row == end.row)) {
+    if (start == end) {
         return moveNumber
     }
     if (start.column != end.column) {

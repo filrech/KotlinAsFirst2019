@@ -3,6 +3,7 @@ package lesson8.task2
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import java.lang.IndexOutOfBoundsException
 import kotlin.math.abs
 
 class Tests {
@@ -33,6 +34,7 @@ class Tests {
     @Test
     @Tag("Easy")
     fun square() {
+        assertEquals(Square(3,2), square(""))
         assertEquals(Square(3, 2), square("c2"))
         assertEquals(Square(5, 5), square("e5"))
         assertEquals(Square(6, 8), square("f8"))
